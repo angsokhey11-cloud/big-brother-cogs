@@ -1,1 +1,2771 @@
+<!doctype html>
 
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
+
+<title>
+  BIG BROTHER — Monthly COGS Report
+</title>
+
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+
+:root{
+
+  --navy:#123f73;
+  --navy2:#174f8f;
+
+  --blue:#2c6fbd;
+
+  --green:#168158;
+  --green-soft:#edf9f3;
+
+  --purple:#704ab0;
+
+  --orange:#aa6500;
+  --orange-soft:#fff5df;
+
+  --red:#b42318;
+  --red-soft:#fff1f0;
+
+  --line:#d9e3ee;
+  --line-soft:#edf1f5;
+
+  --muted:#718297;
+  --text:#263b50;
+
+  --bg:#f2f6fa;
+  --white:#fff;
+
+}
+
+
+html,
+body{
+
+  margin:0;
+  min-height:100%;
+
+}
+
+
+body{
+
+  background:var(--bg);
+
+  color:var(--text);
+
+  font-family:
+    "Segoe UI",
+    Tahoma,
+    Arial,
+    sans-serif;
+
+}
+
+
+.page{
+
+  max-width:1750px;
+
+  margin:0 auto;
+
+  padding:20px;
+
+}
+
+
+body.embed .page{
+
+  padding-top:14px;
+
+}
+
+
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.topbar{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:flex-start;
+
+  gap:18px;
+
+  margin-bottom:14px;
+
+}
+
+
+.title{
+
+  margin:0;
+
+  color:var(--navy);
+
+  font-size:27px;
+
+  font-weight:1000;
+
+  letter-spacing:-.4px;
+
+}
+
+
+.subtitle{
+
+  margin-top:5px;
+
+  color:var(--muted);
+
+  font-size:12px;
+
+  font-weight:600;
+
+}
+
+
+.top-actions{
+
+  display:flex;
+
+  align-items:flex-end;
+
+  gap:8px;
+
+}
+
+
+.field{
+
+  min-width:170px;
+
+}
+
+
+.field label{
+
+  display:block;
+
+  margin-bottom:5px;
+
+  color:#61758b;
+
+  font-size:10px;
+
+  font-weight:900;
+
+  text-transform:uppercase;
+
+}
+
+
+.field input{
+
+  width:100%;
+
+  min-height:40px;
+
+  padding:8px 10px;
+
+  border:1px solid #cad6e3;
+
+  border-radius:9px;
+
+  background:#fff;
+
+  color:var(--text);
+
+  font:inherit;
+
+}
+
+
+button{
+
+  min-height:40px;
+
+  padding:9px 14px;
+
+  border-radius:9px;
+
+  font:inherit;
+
+  font-weight:900;
+
+  cursor:pointer;
+
+}
+
+
+.btn-primary{
+
+  border:1px solid var(--navy);
+
+  background:var(--navy);
+
+  color:#fff;
+
+}
+
+
+.btn-secondary{
+
+  border:1px solid var(--line);
+
+  background:#fff;
+
+  color:var(--navy);
+
+}
+
+
+
+/* ============================================================
+   SUMMARY
+   ============================================================ */
+
+.summary{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      5,
+      minmax(0,1fr)
+    );
+
+  gap:10px;
+
+  margin-bottom:12px;
+
+}
+
+
+.stat{
+
+  background:#fff;
+
+  border:1px solid var(--line);
+
+  border-radius:12px;
+
+  padding:14px 15px;
+
+  box-shadow:
+    0 4px 14px
+    rgba(20,55,90,.035);
+
+}
+
+
+.stat small{
+
+  display:block;
+
+  color:var(--muted);
+
+  font-size:9px;
+
+  font-weight:900;
+
+  text-transform:uppercase;
+
+}
+
+
+.stat strong{
+
+  display:block;
+
+  margin-top:6px;
+
+  color:var(--navy);
+
+  font-size:22px;
+
+  line-height:1;
+
+}
+
+
+.stat span{
+
+  display:block;
+
+  margin-top:5px;
+
+  color:#718297;
+
+  font-size:10px;
+
+}
+
+
+.stat.zero strong{
+
+  color:var(--purple);
+
+}
+
+
+.stat.total strong{
+
+  color:var(--green);
+
+}
+
+
+.stat.cogs strong{
+
+  color:var(--navy2);
+
+}
+
+
+
+/* ============================================================
+   DATA QUALITY
+   ============================================================ */
+
+.quality{
+
+  display:none;
+
+  margin-bottom:12px;
+
+  padding:12px 14px;
+
+  border:1px solid #f2c477;
+
+  border-radius:11px;
+
+  background:var(--orange-soft);
+
+  color:#815000;
+
+  font-size:11px;
+
+  line-height:1.5;
+
+}
+
+
+.quality.show{
+
+  display:block;
+
+}
+
+
+.quality strong{
+
+  display:block;
+
+  margin-bottom:3px;
+
+  font-size:12px;
+
+}
+
+
+
+/* ============================================================
+   DAILY BREAKDOWN
+   ============================================================ */
+
+.daily-panel{
+
+  margin-bottom:14px;
+
+  overflow:hidden;
+
+  background:#fff;
+
+  border:1px solid var(--line);
+
+  border-radius:14px;
+
+}
+
+
+.panel-title{
+
+  padding:13px 15px;
+
+  background:#f8fbfe;
+
+  border-bottom:1px solid var(--line);
+
+  color:var(--navy);
+
+  font-size:14px;
+
+  font-weight:1000;
+
+}
+
+
+.daily-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(190px,1fr)
+    );
+
+  gap:8px;
+
+  padding:12px;
+
+}
+
+
+.day-card{
+
+  padding:11px 12px;
+
+  border:1px solid var(--line-soft);
+
+  border-radius:10px;
+
+  background:#fff;
+
+}
+
+
+.day-date{
+
+  color:var(--navy);
+
+  font-size:11px;
+
+  font-weight:1000;
+
+}
+
+
+.day-row{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:12px;
+
+  margin-top:5px;
+
+  color:#667b90;
+
+  font-size:9px;
+
+}
+
+
+.day-row strong{
+
+  color:#334f69;
+
+}
+
+
+.day-cogs{
+
+  margin-top:7px;
+
+  padding-top:7px;
+
+  border-top:1px solid var(--line-soft);
+
+  display:flex;
+
+  justify-content:space-between;
+
+  color:var(--navy);
+
+  font-size:10px;
+
+  font-weight:1000;
+
+}
+
+
+
+/* ============================================================
+   TOOLBAR
+   ============================================================ */
+
+.toolbar{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+  margin-bottom:12px;
+
+}
+
+
+.search{
+
+  width:min(
+    470px,
+    100%
+  );
+
+  height:40px;
+
+  border:1px solid #cbd7e5;
+
+  border-radius:9px;
+
+  padding:8px 11px;
+
+  font:inherit;
+
+  outline:none;
+
+  background:#fff;
+
+}
+
+
+.search:focus{
+
+  border-color:#8cb1d9;
+
+  box-shadow:
+    0 0 0 3px
+    #edf5ff;
+
+}
+
+
+.live{
+
+  margin-left:auto;
+
+  padding:6px 9px;
+
+  border-radius:999px;
+
+  background:var(--green-soft);
+
+  color:var(--green);
+
+  font-size:9px;
+
+  font-weight:900;
+
+}
+
+
+
+/* ============================================================
+   LOCATION
+   ============================================================ */
+
+.location-card{
+
+  margin-bottom:14px;
+
+  overflow:hidden;
+
+  background:#fff;
+
+  border:1px solid var(--line);
+
+  border-radius:14px;
+
+  box-shadow:
+    0 5px 18px
+    rgba(24,54,87,.04);
+
+}
+
+
+.location-head{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  gap:15px;
+
+  padding:13px 15px;
+
+  background:#f8fbfe;
+
+  border-bottom:1px solid var(--line);
+
+}
+
+
+.location-name{
+
+  color:var(--navy);
+
+  font-size:15px;
+
+  font-weight:1000;
+
+}
+
+
+.location-code{
+
+  margin-top:3px;
+
+  color:var(--muted);
+
+  font-size:10px;
+
+  font-weight:800;
+
+}
+
+
+.location-totals{
+
+  display:flex;
+
+  gap:20px;
+
+  text-align:right;
+
+}
+
+
+.location-total small{
+
+  display:block;
+
+  color:var(--muted);
+
+  font-size:8px;
+
+  font-weight:900;
+
+  text-transform:uppercase;
+
+}
+
+
+.location-total strong{
+
+  display:block;
+
+  margin-top:3px;
+
+  color:var(--navy);
+
+  font-size:14px;
+
+}
+
+
+
+/* ============================================================
+   TABLE
+   ============================================================ */
+
+.table-wrap{
+
+  overflow:auto;
+
+}
+
+
+table{
+
+  width:100%;
+
+  min-width:1050px;
+
+  border-collapse:collapse;
+
+}
+
+
+th,
+td{
+
+  padding:10px 12px;
+
+  border-bottom:
+    1px solid
+    var(--line-soft);
+
+  font-size:11px;
+
+  white-space:nowrap;
+
+}
+
+
+th{
+
+  background:#fbfcfe;
+
+  color:#63778b;
+
+  font-size:9px;
+
+  font-weight:900;
+
+  text-transform:uppercase;
+
+  text-align:left;
+
+}
+
+
+th.num,
+td.num{
+
+  text-align:right;
+
+}
+
+
+tbody tr:hover{
+
+  background:#fbfdff;
+
+}
+
+
+.sku{
+
+  color:var(--navy);
+
+  font-weight:900;
+
+}
+
+
+.product{
+
+  color:#324b63;
+
+  font-weight:800;
+
+}
+
+
+.purchased{
+
+  color:var(--blue);
+
+  font-weight:900;
+
+}
+
+
+.zero{
+
+  color:var(--purple);
+
+  font-weight:900;
+
+}
+
+
+.total{
+
+  color:var(--green);
+
+  font-weight:1000;
+
+}
+
+
+.cogs{
+
+  color:var(--navy);
+
+  font-weight:1000;
+
+}
+
+
+
+/* ============================================================
+   STATUS
+   ============================================================ */
+
+.badge{
+
+  display:inline-block;
+
+  padding:4px 7px;
+
+  border-radius:999px;
+
+  font-size:8px;
+
+  font-weight:1000;
+
+}
+
+
+.badge.ok{
+
+  background:var(--green-soft);
+
+  color:var(--green);
+
+}
+
+
+.badge.warning{
+
+  background:var(--orange-soft);
+
+  color:var(--orange);
+
+}
+
+
+.badge.error{
+
+  background:var(--red-soft);
+
+  color:var(--red);
+
+}
+
+
+
+/* ============================================================
+   LOCATION FOOTER
+   ============================================================ */
+
+.location-foot{
+
+  display:flex;
+
+  justify-content:flex-end;
+
+  gap:40px;
+
+  padding:11px 15px;
+
+  background:#fbfcfe;
+
+  border-top:1px solid var(--line);
+
+  font-size:11px;
+
+}
+
+
+.location-foot strong{
+
+  color:var(--navy);
+
+}
+
+
+
+/* ============================================================
+   GRAND TOTAL
+   ============================================================ */
+
+.grand{
+
+  display:flex;
+
+  justify-content:flex-end;
+
+  margin-top:14px;
+
+}
+
+
+.grand-card{
+
+  min-width:380px;
+
+  padding:17px 19px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #123f73,
+      #1c5b9d
+    );
+
+  color:#fff;
+
+  border-radius:14px;
+
+  box-shadow:
+    0 8px 22px
+    rgba(18,63,115,.18);
+
+}
+
+
+.grand-card small{
+
+  display:block;
+
+  color:#cfdef0;
+
+  font-size:9px;
+
+  font-weight:900;
+
+  text-transform:uppercase;
+
+}
+
+
+.grand-card strong{
+
+  display:block;
+
+  margin-top:5px;
+
+  font-size:28px;
+
+  font-weight:1000;
+
+}
+
+
+.grand-card span{
+
+  display:block;
+
+  margin-top:6px;
+
+  color:#dce9f6;
+
+  font-size:10px;
+
+}
+
+
+
+/* ============================================================
+   EMPTY / LOADING
+   ============================================================ */
+
+.loading,
+.empty{
+
+  padding:50px 20px;
+
+  background:#fff;
+
+  border:1px solid var(--line);
+
+  border-radius:13px;
+
+  text-align:center;
+
+  color:var(--muted);
+
+}
+
+
+.loading strong{
+
+  display:block;
+
+  margin-bottom:5px;
+
+  color:var(--navy);
+
+}
+
+
+.status{
+
+  margin-top:10px;
+
+  text-align:center;
+
+  color:var(--muted);
+
+  font-size:10px;
+
+}
+
+
+.status.ok{
+
+  color:var(--green);
+
+}
+
+
+.status.error{
+
+  color:var(--red);
+
+}
+
+
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+
+@media print{
+
+  body{
+    background:#fff;
+  }
+
+
+  .top-actions,
+  .toolbar,
+  .status{
+
+    display:none!important;
+
+  }
+
+
+  .page{
+
+    max-width:none;
+
+    padding:0;
+
+  }
+
+
+  .location-card,
+  .daily-panel{
+
+    break-inside:avoid;
+
+    box-shadow:none;
+
+  }
+
+}
+
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media(max-width:1200px){
+
+  .summary{
+
+    grid-template-columns:
+      repeat(
+        3,
+        minmax(0,1fr)
+      );
+
+  }
+
+}
+
+
+@media(max-width:800px){
+
+  .topbar{
+
+    display:block;
+
+  }
+
+
+  .top-actions{
+
+    margin-top:12px;
+
+  }
+
+
+  .summary{
+
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0,1fr)
+      );
+
+  }
+
+
+  .location-head{
+
+    align-items:flex-start;
+
+    flex-direction:column;
+
+  }
+
+
+  .location-totals{
+
+    width:100%;
+
+    justify-content:flex-start;
+
+    text-align:left;
+
+  }
+
+}
+
+
+@media(max-width:520px){
+
+  .summary{
+
+    grid-template-columns:1fr;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+  <!-- ========================================================
+       HEADER
+       ======================================================== -->
+
+  <div class="topbar">
+
+
+    <div>
+
+      <h1 class="title">
+        📦 Monthly COGS Report
+      </h1>
+
+      <div class="subtitle">
+        Monthly Cost of Goods Sold · Location → SKU · Purchased inventory cost only
+      </div>
+
+    </div>
+
+
+    <div class="top-actions">
+
+
+      <div class="field">
+
+        <label>
+          Report Month
+        </label>
+
+        <input
+          id="reportMonth"
+          type="month"
+        >
+
+      </div>
+
+
+      <button
+        type="button"
+        id="currentMonthBtn"
+        class="btn-secondary"
+      >
+        This Month
+      </button>
+
+
+      <button
+        type="button"
+        id="refreshBtn"
+        class="btn-primary"
+      >
+        ↻ Refresh
+      </button>
+
+
+      <button
+        type="button"
+        id="printBtn"
+        class="btn-secondary"
+      >
+        Print
+      </button>
+
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- ========================================================
+       SUMMARY
+       ======================================================== -->
+
+  <div class="summary">
+
+
+    <div class="stat">
+
+      <small>
+        Purchased Sold Qty
+      </small>
+
+      <strong id="sumPurchased">
+        0
+      </strong>
+
+      <span>
+        Qty generating COGS
+      </span>
+
+    </div>
+
+
+    <div class="stat zero">
+
+      <small>
+        Zero-Cost Sold Qty
+      </small>
+
+      <strong id="sumZero">
+        0
+      </strong>
+
+      <span>
+        COGS = $0
+      </span>
+
+    </div>
+
+
+    <div class="stat total">
+
+      <small>
+        Total Sold Qty
+      </small>
+
+      <strong id="sumTotal">
+        0
+      </strong>
+
+      <span>
+        Purchased + Zero-Cost
+      </span>
+
+    </div>
+
+
+    <div class="stat">
+
+      <small>
+        Locations
+      </small>
+
+      <strong id="sumLocations">
+        0
+      </strong>
+
+      <span>
+        Separate location totals
+      </span>
+
+    </div>
+
+
+    <div class="stat cogs">
+
+      <small>
+        Monthly COGS
+      </small>
+
+      <strong id="sumCOGS">
+        $0.00
+      </strong>
+
+      <span id="periodLabel">
+        -
+      </span>
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- ========================================================
+       QUALITY
+       ======================================================== -->
+
+  <div
+    id="quality"
+    class="quality"
+  ></div>
+
+
+
+  <!-- ========================================================
+       DAILY TOTALS
+       ======================================================== -->
+
+  <section class="daily-panel">
+
+
+    <div class="panel-title">
+      📅 Daily COGS Breakdown
+    </div>
+
+
+    <div
+      id="dailyTotals"
+      class="daily-grid"
+    ></div>
+
+
+  </section>
+
+
+
+  <!-- ========================================================
+       SEARCH
+       ======================================================== -->
+
+  <div class="toolbar">
+
+
+    <input
+      id="search"
+      class="search"
+      type="search"
+      autocomplete="off"
+      placeholder="Search Location / SKU / Product"
+    >
+
+
+    <span class="live">
+      ● LIVE MONTHLY COGS
+    </span>
+
+
+  </div>
+
+
+
+  <!-- ========================================================
+       CONTENT
+       ======================================================== -->
+
+  <div id="content">
+
+
+    <div class="loading">
+
+      <strong>
+        Loading Monthly COGS
+      </strong>
+
+      Reading Supabase sales cost ledger...
+
+    </div>
+
+
+  </div>
+
+
+
+  <div
+    id="status"
+    class="status"
+  >
+    Connecting to Supabase...
+  </div>
+
+
+</div>
+
+
+
+<script src="supabase-cogs-adapter.js?v=20260912-1"></script>
+
+
+<script>
+
+'use strict';
+
+
+
+/* ============================================================
+   STATE
+   ============================================================ */
+
+let report = null;
+
+let loading = false;
+
+
+const $ =
+  id =>
+    document.getElementById(
+      id
+    );
+
+
+
+/* ============================================================
+   EMBED
+   ============================================================ */
+
+if(
+  new URLSearchParams(
+    location.search
+  )
+  .get(
+    'embed'
+  )
+  ===
+  '1'
+){
+
+  document.body.classList.add(
+    'embed'
+  );
+
+}
+
+
+
+/* ============================================================
+   FORMAT
+   ============================================================ */
+
+function n(
+  value
+){
+
+  const number =
+    Number(
+      value
+    );
+
+
+  return Number.isFinite(
+    number
+  )
+    ?
+    number
+    :
+    0;
+
+}
+
+
+
+function esc(
+  value
+){
+
+  return String(
+    value ?? ''
+  )
+  .replace(
+
+    /[&<>"']/g,
+
+    char =>
+      ({
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        '"':'&quot;',
+        "'":'&#039;'
+      })[
+        char
+      ]
+
+  );
+
+}
+
+
+
+function qty(
+  value
+){
+
+  return n(
+    value
+  )
+  .toLocaleString(
+
+    'en-US',
+
+    {
+      maximumFractionDigits:2
+    }
+
+  );
+
+}
+
+
+
+function money(
+  value
+){
+
+  return '$'
+    +
+    n(
+      value
+    )
+    .toLocaleString(
+
+      'en-US',
+
+      {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }
+
+    );
+
+}
+
+
+
+function cost(
+  value
+){
+
+  const number =
+    n(
+      value
+    );
+
+
+  if(
+    Math.abs(
+      number
+    )
+    <
+    0.000001
+  ){
+
+    return '$0.00';
+
+  }
+
+
+  return '$'
+    +
+    number
+    .toLocaleString(
+
+      'en-US',
+
+      {
+        minimumFractionDigits:2,
+        maximumFractionDigits:6
+      }
+
+    );
+
+}
+
+
+
+function currentMonth(){
+
+  const now =
+    new Date();
+
+
+  return(
+
+    now.getFullYear()
+
+    +
+
+    '-'
+
+    +
+
+    String(
+      now.getMonth()+1
+    )
+    .padStart(
+      2,
+      '0'
+    )
+
+  );
+
+}
+
+
+
+function visibleDate(
+  value
+){
+
+  const match =
+    String(
+      value || ''
+    )
+    .match(
+      /^(\d{4})-(\d{2})-(\d{2})$/
+    );
+
+
+  if(
+    !match
+  ){
+
+    return value || '';
+
+  }
+
+
+  const months = [
+
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec'
+
+  ];
+
+
+  return(
+
+    match[3]
+
+    +
+
+    '-'
+
+    +
+
+    months[
+      Number(
+        match[2]
+      )
+      -
+      1
+    ]
+
+    +
+
+    '-'
+
+    +
+
+    match[1]
+
+  );
+
+}
+
+
+
+function setStatus(
+  text,
+  type=''
+){
+
+  $('status').textContent =
+    text || '';
+
+
+  $('status').className =
+    'status'
+    +
+    (
+      type
+        ?
+        ' '
+        +
+        type
+        :
+        ''
+    );
+
+}
+
+
+
+/* ============================================================
+   COST STATUS
+   ============================================================ */
+
+function statusBadge(
+  row
+){
+
+  const status =
+    String(
+      row.costStatus
+      ||
+      'OK'
+    )
+    .toUpperCase();
+
+
+  if(
+    status === 'OK'
+  ){
+
+    return`
+
+<span class="badge ok">
+  OK
+</span>
+
+`;
+
+  }
+
+
+  if(
+    status === 'MISSING_COST'
+  ){
+
+    return`
+
+<span class="badge warning">
+  ⚠ MISSING COST
+</span>
+
+`;
+
+  }
+
+
+  return`
+
+<span class="badge error">
+  ${esc(status)}
+</span>
+
+`;
+
+}
+
+
+
+/* ============================================================
+   FILTER
+   ============================================================ */
+
+function filteredLocations(){
+
+  const query =
+    $('search')
+      .value
+      .trim()
+      .toLowerCase();
+
+
+  const locations =
+    Array.isArray(
+      report?.locations
+    )
+      ?
+      report.locations
+      :
+      [];
+
+
+  if(
+    !query
+  ){
+
+    return locations;
+
+  }
+
+
+  return locations
+
+    .map(
+      location =>{
+
+
+        const locationMatch =
+          [
+            location.locationCode,
+            location.locationName
+          ]
+          .join(
+            ' '
+          )
+          .toLowerCase()
+          .includes(
+            query
+          );
+
+
+        const products =
+          (
+            Array.isArray(
+              location.products
+            )
+              ?
+              location.products
+              :
+              []
+          )
+          .filter(
+            product =>{
+
+
+              if(
+                locationMatch
+              ){
+
+                return true;
+
+              }
+
+
+              return [
+
+                product.productCode,
+                product.productName,
+                product.sku
+
+              ]
+              .join(
+                ' '
+              )
+              .toLowerCase()
+              .includes(
+                query
+              );
+
+            }
+          );
+
+
+        return{
+
+          ...location,
+
+          products
+
+        };
+
+      }
+    )
+
+    .filter(
+      location =>
+        location.products.length
+        >
+        0
+    );
+
+}
+
+
+
+/* ============================================================
+   QUALITY
+   ============================================================ */
+
+function renderQuality(){
+
+  const q =
+    report?.dataQuality
+    ||
+    {};
+
+
+  const box =
+    $('quality');
+
+
+  if(
+    !q.hasIssues
+  ){
+
+    box.classList.remove(
+      'show'
+    );
+
+
+    box.innerHTML =
+      '';
+
+
+    return;
+
+  }
+
+
+  box.classList.add(
+    'show'
+  );
+
+
+  box.innerHTML =`
+
+<strong>
+  ⚠ Monthly COGS Data Quality Warning
+</strong>
+
+Purchased stock with missing historical cost remains marked as Purchased stock and is NOT converted to Zero-Cost.
+
+Missing Cost Rows:
+<b>${qty(q.missingCostRowCount)}</b>
+
+· Missing Cost Qty:
+<b>${qty(q.missingCostQty)}</b>
+
+· Unknown Source Rows:
+<b>${qty(q.unknownSourceRowCount)}</b>
+
+· Zero-Cost Value Errors:
+<b>${qty(q.zeroCostNonzeroValueRowCount)}</b>
+
+`;
+
+}
+
+
+
+/* ============================================================
+   SUMMARY
+   ============================================================ */
+
+function renderSummary(){
+
+  const totals =
+    report?.totals
+    ||
+    {};
+
+
+  $('sumPurchased').textContent =
+    qty(
+      totals.purchasedSoldQty
+    );
+
+
+  $('sumZero').textContent =
+    qty(
+      totals.zeroCostSoldQty
+    );
+
+
+  $('sumTotal').textContent =
+    qty(
+      totals.totalSoldQty
+    );
+
+
+  $('sumLocations').textContent =
+    qty(
+      Array.isArray(
+        report?.locations
+      )
+        ?
+        report.locations.length
+        :
+        0
+    );
+
+
+  $('sumCOGS').textContent =
+    money(
+      totals.totalMonthlyCOGSUSD
+    );
+
+
+  $('periodLabel').textContent =
+    report?.periodLabel
+    ||
+    '-';
+
+}
+
+
+
+/* ============================================================
+   DAILY BREAKDOWN
+   ============================================================ */
+
+function renderDailyTotals(){
+
+  const rows =
+    Array.isArray(
+      report?.dailyTotals
+    )
+      ?
+      report.dailyTotals
+      :
+      [];
+
+
+  if(
+    !rows.length
+  ){
+
+    $('dailyTotals').innerHTML =`
+
+<div class="day-card">
+
+  <div class="day-date">
+    No COGS activity
+  </div>
+
+</div>
+
+`;
+
+
+    return;
+
+  }
+
+
+  $('dailyTotals').innerHTML =
+    rows
+      .map(
+        row =>`
+
+<div class="day-card">
+
+
+  <div class="day-date">
+    ${esc(
+      visibleDate(
+        row.date
+      )
+    )}
+  </div>
+
+
+  <div class="day-row">
+
+    <span>
+      Purchased
+    </span>
+
+    <strong>
+      ${qty(row.purchasedSoldQty)}
+    </strong>
+
+  </div>
+
+
+  <div class="day-row">
+
+    <span>
+      Zero-Cost
+    </span>
+
+    <strong style="color:#704ab0">
+      ${qty(row.zeroCostSoldQty)}
+    </strong>
+
+  </div>
+
+
+  <div class="day-row">
+
+    <span>
+      Total Sold
+    </span>
+
+    <strong>
+      ${qty(row.totalSoldQty)}
+    </strong>
+
+  </div>
+
+
+  <div class="day-cogs">
+
+    <span>
+      Daily COGS
+    </span>
+
+    <span>
+      ${money(row.dailyCOGSUSD)}
+    </span>
+
+  </div>
+
+
+</div>
+
+`
+      )
+      .join(
+        ''
+      );
+
+}
+
+
+
+/* ============================================================
+   PRODUCT ROW
+   ============================================================ */
+
+function productRow(
+  product
+){
+
+  return`
+
+<tr>
+
+  <td class="sku">
+    ${esc(product.productCode)}
+  </td>
+
+  <td class="product">
+    ${esc(product.productName)}
+  </td>
+
+  <td>
+    ${esc(product.unit||'')}
+  </td>
+
+  <td class="num purchased">
+    ${qty(product.purchasedSoldQty)}
+  </td>
+
+  <td class="num zero">
+    ${qty(product.zeroCostSoldQty)}
+  </td>
+
+  <td class="num total">
+    ${qty(product.totalSoldQty)}
+  </td>
+
+  <td class="num">
+    ${cost(product.purchasedUnitCost)}
+  </td>
+
+  <td class="num cogs">
+    ${money(product.totalCOGSUSD)}
+  </td>
+
+  <td>
+    ${statusBadge(product)}
+  </td>
+
+</tr>
+
+`;
+
+}
+
+
+
+/* ============================================================
+   LOCATION CARD
+   ============================================================ */
+
+function locationCard(
+  location
+){
+
+  const products =
+    Array.isArray(
+      location.products
+    )
+      ?
+      location.products
+      :
+      [];
+
+
+  return`
+
+<section class="location-card">
+
+
+  <div class="location-head">
+
+
+    <div>
+
+      <div class="location-name">
+        📍 ${esc(location.locationName)}
+      </div>
+
+      <div class="location-code">
+        ${esc(location.locationCode)}
+      </div>
+
+    </div>
+
+
+    <div class="location-totals">
+
+
+      <div class="location-total">
+
+        <small>
+          Purchased Sold
+        </small>
+
+        <strong>
+          ${qty(location.purchasedSoldQty)}
+        </strong>
+
+      </div>
+
+
+      <div class="location-total">
+
+        <small>
+          Zero-Cost Sold
+        </small>
+
+        <strong style="color:#704ab0">
+          ${qty(location.zeroCostSoldQty)}
+        </strong>
+
+      </div>
+
+
+      <div class="location-total">
+
+        <small>
+          Location COGS
+        </small>
+
+        <strong>
+          ${money(location.locationCOGSUSD)}
+        </strong>
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+
+  <div class="table-wrap">
+
+
+    <table>
+
+
+      <thead>
+
+        <tr>
+
+          <th>
+            SKU
+          </th>
+
+          <th>
+            Product
+          </th>
+
+          <th>
+            Unit
+          </th>
+
+          <th class="num">
+            Purchased Sold
+          </th>
+
+          <th class="num">
+            Zero-Cost Sold
+          </th>
+
+          <th class="num">
+            Total Sold
+          </th>
+
+          <th class="num">
+            Avg Purchased Cost
+          </th>
+
+          <th class="num">
+            Total COGS
+          </th>
+
+          <th>
+            Cost Status
+          </th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody>
+
+        ${
+          products
+            .map(
+              productRow
+            )
+            .join(
+              ''
+            )
+        }
+
+      </tbody>
+
+
+    </table>
+
+
+  </div>
+
+
+
+  <div class="location-foot">
+
+    <span>
+
+      Total Sold:
+
+      <strong>
+        ${qty(location.totalSoldQty)}
+      </strong>
+
+    </span>
+
+
+    <span>
+
+      Location COGS:
+
+      <strong>
+        ${money(location.locationCOGSUSD)}
+      </strong>
+
+    </span>
+
+  </div>
+
+
+</section>
+
+`;
+
+}
+
+
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+
+function render(){
+
+  if(
+    !report
+  ){
+
+    return;
+
+  }
+
+
+  renderSummary();
+
+  renderQuality();
+
+  renderDailyTotals();
+
+
+  const locations =
+    filteredLocations();
+
+
+  if(
+    !locations.length
+  ){
+
+    $('content').innerHTML =`
+
+<div class="empty">
+
+  No Monthly COGS activity found for
+
+  <strong>
+    ${esc(
+      report.periodLabel
+      ||
+      ''
+    )}
+  </strong>.
+
+</div>
+
+`;
+
+
+    return;
+
+  }
+
+
+  const totalCOGS =
+    n(
+      report?.totals?.totalMonthlyCOGSUSD
+    );
+
+
+  const totalSold =
+    n(
+      report?.totals?.totalSoldQty
+    );
+
+
+  $('content').innerHTML =
+
+    locations
+      .map(
+        locationCard
+      )
+      .join(
+        ''
+      )
+
+    +
+
+`
+
+<div class="grand">
+
+
+  <div class="grand-card">
+
+
+    <small>
+      Total Monthly COGS
+    </small>
+
+
+    <strong>
+      ${money(totalCOGS)}
+    </strong>
+
+
+    <span>
+
+      ${qty(totalSold)}
+      total net Qty sold
+
+      ·
+
+      ${esc(
+        report.periodLabel
+        ||
+        ''
+      )}
+
+      · Purchased inventory cost only
+
+    </span>
+
+
+  </div>
+
+
+</div>
+
+`;
+
+}
+
+
+
+/* ============================================================
+   LOAD
+   ============================================================ */
+
+async function loadReport(){
+
+  if(
+    loading
+  ){
+
+    return;
+
+  }
+
+
+  const monthValue =
+    $('reportMonth')
+      .value;
+
+
+  if(
+    !monthValue
+  ){
+
+    return;
+
+  }
+
+
+  const parts =
+    monthValue.split(
+      '-'
+    );
+
+
+  const year =
+    Number(
+      parts[0]
+    );
+
+
+  const month =
+    Number(
+      parts[1]
+    );
+
+
+  if(
+    !year
+    ||
+    !month
+  ){
+
+    return;
+
+  }
+
+
+  loading =
+    true;
+
+
+  setStatus(
+    'Loading Monthly COGS...'
+  );
+
+
+  try{
+
+
+    const data =
+      await window.BBCogsAdapter.monthlyReport(
+
+        year,
+
+        month
+
+      );
+
+
+    report =
+      data;
+
+
+    render();
+
+
+    setStatus(
+
+      'Monthly COGS loaded · '
+
+      +
+
+      (
+        data.version
+        ||
+        'MONTHLY-COGS-REPORT-V1'
+      )
+
+      +
+
+      ' · Generated '
+
+      +
+
+      (
+        data.generatedAt
+        ||
+        ''
+      ),
+
+      'ok'
+
+    );
+
+
+  }catch(error){
+
+
+    console.error(
+      error
+    );
+
+
+    report =
+      null;
+
+
+    $('content').innerHTML =`
+
+<div class="empty">
+
+  Could not load Monthly COGS Report.
+
+  <br><br>
+
+  ${esc(
+    error.message
+  )}
+
+</div>
+
+`;
+
+
+    $('dailyTotals').innerHTML =
+      '';
+
+
+    setStatus(
+      error.message,
+      'error'
+    );
+
+
+  }finally{
+
+
+    loading =
+      false;
+
+
+  }
+
+}
+
+
+
+/* ============================================================
+   EVENTS
+   ============================================================ */
+
+$('refreshBtn')
+  .addEventListener(
+    'click',
+    loadReport
+  );
+
+
+$('reportMonth')
+  .addEventListener(
+    'change',
+    loadReport
+  );
+
+
+$('currentMonthBtn')
+  .addEventListener(
+
+    'click',
+
+    ()=>{
+
+      $('reportMonth').value =
+        currentMonth();
+
+
+      loadReport();
+
+    }
+
+  );
+
+
+$('printBtn')
+  .addEventListener(
+    'click',
+    ()=>window.print()
+  );
+
+
+$('search')
+  .addEventListener(
+    'input',
+    render
+  );
+
+
+
+/* ============================================================
+   START
+   ============================================================ */
+
+$('reportMonth').value =
+  currentMonth();
+
+
+loadReport();
+
+
+</script>
+
+
+</body>
+
+</html>
