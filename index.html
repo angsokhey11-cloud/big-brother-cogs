@@ -1,0 +1,63 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
+
+<title>
+  BIG BROTHER — COGS
+</title>
+
+</head>
+
+
+<body>
+
+
+<script>
+
+(function(){
+
+  const params =
+    new URLSearchParams(
+      location.search
+    );
+
+
+  const query =
+    params.toString();
+
+
+  location.replace(
+
+    'daily.html'
+
+    +
+
+    (
+      query
+        ?
+        '?'
+        +
+        query
+        :
+        ''
+    )
+
+  );
+
+})();
+
+</script>
+
+
+</body>
+
+</html>
