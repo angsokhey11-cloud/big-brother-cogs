@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>BIG BROTHER — Daily COGS Mobile</title>
+<link rel="stylesheet" href="mobile-daily.css?v=20260915-1">
+<script src="supabase-cogs-adapter.js?v=20260912-1"></script>
+</head>
+<body>
+<main class="app">
+  <header class="mobile-head">
+    <div>
+      <strong>Daily COGS Report</strong>
+      <span>Purchased inventory cost · Zero-Cost stock excluded from COGS</span>
+    </div>
+    <button id="topRefreshBtn" type="button" aria-label="Refresh">↻</button>
+  </header>
+
+  <section class="controls-card">
+    <label class="date-field">
+      <span>Report Date</span>
+      <input id="reportDate" type="date">
+    </label>
+    <button id="todayBtn" class="control-btn" type="button">Today</button>
+    <button id="refreshBtn" class="control-btn primary" type="button">↻</button>
+    <input id="search" class="search" type="search" autocomplete="off" placeholder="Search Location / SKU / Product">
+  </section>
+
+  <div id="errorBox" class="error-box" hidden></div>
+  <div id="loadingBox" class="loading-box">Loading Daily COGS…</div>
+
+  <section id="summary" class="summary" hidden>
+    <article class="stat cogs main"><small>Daily COGS</small><strong id="sumCOGS">$0.00</strong><span>Purchased stock only</span></article>
+    <article class="stat"><small>Purchased Sold Qty</small><strong id="sumPurchased">0</strong><span>Qty generating COGS</span></article>
+    <article class="stat zero"><small>Zero-Cost Sold Qty</small><strong id="sumZero">0</strong><span>COGS = $0</span></article>
+    <article class="stat total"><small>Total Sold Qty</small><strong id="sumTotal">0</strong><span>Purchased + Zero-Cost</span></article>
+    <article class="stat"><small>Locations</small><strong id="sumLocations">0</strong><span>Kept separate</span></article>
+  </section>
+
+  <section id="quality" class="quality" hidden></section>
+
+  <section id="content"></section>
+
+  <section id="grandCard" class="grand-card" hidden>
+    <small>Daily COGS</small>
+    <strong id="grandCOGS">$0.00</strong>
+    <span id="grandMeta">0 total net Qty sold · Purchased inventory cost only</span>
+  </section>
+
+  <div id="status" class="status"></div>
+</main>
+<script src="mobile-daily.js?v=20260915-1"></script>
+</body>
+</html>
